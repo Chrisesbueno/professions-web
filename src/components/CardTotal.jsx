@@ -2,11 +2,11 @@ import React from "react";
 import styles from "../styles/Card.module.css";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
-const CardTotal = ({ texts, data, users = true }) => {
+const CardTotal = ({ texts, data, users = true, today = false }) => {
   if (data)
     return (
       <div className={styles.card}>
-        <p className={styles.title}>
+        <p className={today ? styles.titleToday : styles.title}>
           {texts.title}
           {texts?.country === "VEN"
             ? " en Venezuela"
@@ -17,7 +17,7 @@ const CardTotal = ({ texts, data, users = true }) => {
         <div className={styles.content}>
           <div>
             <p className={styles.contentTitle}>{data}</p>
-            <span>registros</span>
+            <span>{today ? "activos" : "registros"}</span>
           </div>
           {users ? (
             <PeopleAltRoundedIcon

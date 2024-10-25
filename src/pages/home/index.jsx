@@ -8,6 +8,7 @@ import MultipleSelect from "@/components/MultipleSelect";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Home = () => {
+  const [dataToday, setDataToday] = useState(null);
   const [dataUsers, setDataUsers] = useState(null);
   const [dataBusiness, setDataBusiness] = useState(null);
   const [dataBusinessOwner, setDataBusinessOwner] = useState(null);
@@ -17,6 +18,20 @@ const Home = () => {
 
   const fetchTotalSummary = async () => {
     setLoading(true);
+    /* users */
+    const pathToday = "/api/totalToday";
+    const paramsToday = {
+      headers: {},
+      queryStringParameters: {
+        country: selectCountry === "Todos" ? "" : selectCountry,
+      },
+    };
+    const urlToday = `${pathToday}?country=${paramsToday.queryStringParameters.country}`;
+    const responseToday = await fetch(urlToday, {
+      method: "GET",
+    });
+    const dataToday = await responseToday.json();
+    console.log(dataToday);
     /* users */
     const path = "/api/totalSummaryUsers";
     const params = {
@@ -73,7 +88,8 @@ const Home = () => {
       method: "GET",
     });
     const dataCharge = await responseCharge.json();
-    console.log(dataCharge);
+
+    setDataToday(dataToday);
     setDataUsers(data);
     setDataBusiness(dataBusinessApi);
     setDataBusinessOwner(dataOwner);
@@ -106,6 +122,26 @@ const Home = () => {
           </div>
         ) : (
           <div>
+            <div className={styles.contentUsers}>
+              <p className={styles.title}>
+                Usuarios activos hoy{" "}
+                {selectCountry === "VEN"
+                  ? " en Venezuela"
+                  : selectCountry === "COL"
+                  ? " en Colombia"
+                  : ""}
+              </p>
+              <div className={styles.users}>
+                <CardTotal
+                  texts={{
+                    title: "Total de Usuarios Activos",
+                    country: selectCountry,
+                  }}
+                  data={dataToday?.today_count}
+                  today={true}
+                />
+              </div>
+            </div>
             <div className={styles.contentUsers}>
               <p className={styles.title}>
                 Usuarios{" "}

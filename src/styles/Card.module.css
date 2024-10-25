@@ -12,9 +12,15 @@
   justify-content: space-between;
   padding: 1rem 0;
 }
+
 .title {
   font-size: 18px;
   font-weight: 500;
+}
+.titleToday {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 .contentTitle {
   font-size: 44px;
